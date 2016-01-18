@@ -16,22 +16,33 @@ prDat[sample(nrow(prDat), 7), ]
 
 ## What does row correspond to - different 
 ## genes or different mice?
+str(prDat)
+## different mice. 
 
 ## What are the variable names? 
+names(prDat)
+dimnames(prDat)
 
 ## What “flavor” is each variable,
 ## i.e. numeric, character, factor? 
+str(prDat)
 
 ## For sample, do a sanity check 
 ## that each integer between 1 and 
 ## the number of rows in the dataset 
 ## occurs exactly once. 
+identical(seq(from = 1, to = nrow(prDat)), 
+          sort(prDat$sample))
 
 ## For each factor variable, what are 
 ## the levels? 
+str(prDat)
+levels(prDat$devStage)
+levels(prDat$gType)
 
 ## How many observations do we have for
 ## each level of devStage? For gType? 
+
 
 ## Perform a cross-tabulation of devStage 
 ## and gType.
@@ -44,4 +55,3 @@ prDat[sample(nrow(prDat), 7), ]
 
 ## For each quantitative variable, what 
 ## are the extremes? How about average or median? 
-
