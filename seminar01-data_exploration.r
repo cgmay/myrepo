@@ -42,16 +42,44 @@ levels(prDat$gType)
 
 ## How many observations do we have for
 ## each level of devStage? For gType? 
+summary(prDat$devStage)
+summary(prDat$gType)
 
+table(prDat$devStage)
+table(prDat$gType)
 
 ## Perform a cross-tabulation of devStage 
 ## and gType.
+table(prDat$devStage, prDat$gType)
 
 ## If you had to take a wild guess, what 
 ## do you think the intended experimental 
 ## design was? 
 
+#  To analyze the expression of 3 genes 
+#  (crabHammer, eggBomb, and poisonFang)
+#  throughout development stages in WT and
+#  nrl KO mice.
+
 ## What actually happened in real life?
+
+#  there was no significant difference between the
+#  expression of any genes in the different
+#  genotypes
 
 ## For each quantitative variable, what 
 ## are the extremes? How about average or median? 
+max(prDat$crabHammer)
+min(prDat$crabHammer)
+mean(prDat$crabHammer)
+median(prDat$crabHammer)
+
+max(prDat$eggBomb)
+min(prDat$eggBomb)
+mean(prDat$eggBomb)
+median(prDat$eggBomb)
+
+range(prDat$crabHammer)
+summary(prDat$crabHammer)
+quantile()
+fivenum()
