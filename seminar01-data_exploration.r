@@ -42,16 +42,23 @@ levels(prDat$gType)
 
 ## How many observations do we have for
 ## each level of devStage? For gType? 
+summary(prDat$devStage)
+summary(prDat$gType)
 
+table(prDat$devStage)
+table(prDat$gType)
 
 ## Perform a cross-tabulation of devStage 
 ## and gType.
+table(prDat$devStage, prDat$gType)
 
 ## If you had to take a wild guess, what 
 ## do you think the intended experimental 
 ## design was? 
 
+
 ## What actually happened in real life?
+
 
 ## For each quantitative variable, what 
 ## are the extremes? How about average or median? 
