@@ -56,16 +56,16 @@ table(prDat$devStage, prDat$gType)
 ## do you think the intended experimental 
 ## design was? 
 
-#  To analyze the expression of 3 genes 
-#  (crabHammer, eggBomb, and poisonFang)
-#  throughout development stages in WT and
-#  nrl KO mice.
+##  To analyze the expression of 3 genes 
+## (crabHammer, eggBomb, and poisonFang)
+##  throughout development stages in WT and
+##  nrl KO mice.
 
 ## What actually happened in real life?
 
-#  there was no significant difference between the
-#  expression of any genes in the different
-#  genotypes
+##  there was no significant difference between the
+##  expression of any genes in the different
+##  genotypes
 
 ## For each quantitative variable, what 
 ## are the extremes? How about average or median? 
@@ -81,5 +81,5 @@ median(prDat$eggBomb)
 
 range(prDat$crabHammer)
 summary(prDat$crabHammer)
-quantile()
-fivenum()
+quantile(prDat$crabHammer)
+fivenum(prDat$crabHammer)
