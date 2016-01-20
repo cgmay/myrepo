@@ -83,3 +83,26 @@ range(prDat$crabHammer)
 summary(prDat$crabHammer)
 quantile(prDat$crabHammer)
 fivenum(prDat$crabHammer)
+
+## Create a new data.frame called weeDat only 
+## containing observations for which expression 
+## of poisonFang is above 7.5
+
+weeDat <- subset(prDat, prDat$poisonFang > 7.5)
+
+## For how many observations poisonFang > 7.5? 
+
+nrow(weeDat)
+
+## How do they break down by genotype and developmental stage?
+
+summary(weeDat$gType)
+summary(weeDat$devStage)
+
+## Print the observations with row names "Sample_16"
+## and "Sample_38" to screen, showing only the 3 gene
+## expression variables
+
+
+## Which samples have expression of eggBomb less than 0.10 quantile?
+
