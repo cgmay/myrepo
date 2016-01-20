@@ -105,4 +105,3 @@ summary(weeDat$devStage)
 
 
 ## Which samples have expression of eggBomb less than 0.10 quantile?
-
