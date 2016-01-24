@@ -177,3 +177,68 @@ chisqNormalisedMean <- function(df, num.samp, samp.size){
   
   return(z.n)
 }
+
+## Plotting code function
+
+plotNormalComparison <- function(df, num.samp, n){
+  z.n <- chisqNormalisedMean(df, num.samp, n)
+  
+  # It will be nice to have a title
+  fig.title <- paste0("sample size = ", n)
+  
+  # Plot a histogram
+  hist(z.n, probability=TRUE, main=fig.title, xlab=expression(Z[n]))
+  
+  # Compute the normal density and overlay it on the plot in red
+  y <- seq(min(z.n), max(z.n), length=1000)
+  
+  dens <- dnorm(y, mean=0, sd=1)
+  
+  lines(y, dens, col="red")
+}
+
+## Now we plot with different n and see how it looks
+
+set.seed(1)
+
+samp.sizes <- c(5, 10, 100, 1000, 1e4)
+
+plot.status <- lapply(samp.sizes, plotNormalComparison, num.samp = num.samp, df = df)
+
+## Kolmogorov-Smirnov test to determine if sample
+## is close enough to actual distribution
+
+set.seed(1)
+
+n <- 5
+
+z.n <- chisqNormalisedMean(df, num.samp, n)
+
+ks.test(z.n, pnorm, mean=0, sd=1)
+
+## Indicates liklihood that they are not 
+## the same. Now we try with 1000 instead 
+## of a measly 5
+
+set.seed(1)
+
+n <- 1000
+
+z.n <- chisqNormalisedMean(df, num.samp, n)
+
+ks.test(z.n, pnorm, mean=0, sd=1)
+
+### Take-home problem
+coin.n <- seq.default(from = 1, to = 1000, length = 1000)
+coin.p <- 0.5
+
+f.toss <- function(n, p){(sum
+  (rbinom(n, 1, p)))/n
+  }
+
+plot.default(coin.n, sapply(coin.n, f.toss, p = 
+                      coin.p), ylim = c(0, 1), ylab = "Proportion", xlab = "Number of Tosses"
+             , main = "Central Tendency of Coin Flips")
+abline(h = coin.p, lwd = 1, col = "red")
+ 
+
