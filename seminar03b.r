@@ -152,6 +152,4 @@ str(oDat)
 
 ## Overplotting and plot matrix
 prDat <- read.table("GSE4051_data.tsv")
-=======
 
->>>>>>> 0ac77580b0d31aafc8129536d6fe26fdb6d6fb4b
