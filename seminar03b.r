@@ -98,6 +98,7 @@ str(oDat)
   stat_density(geom = "line", position = "identity"))
 
 # more similar to lattice, with points at the bottom
+<<<<<<< HEAD
 (p <- ggplot(oDat, aes(geneExp)) +
   stat_density(geom = "line", position = "identity") +
   geom_point(aes(y = 0.05)))
@@ -151,3 +152,6 @@ str(oDat)
 
 ## Overplotting and plot matrix
 prDat <- read.table("GSE4051_data.tsv")
+=======
+
+>>>>>>> 0ac77580b0d31aafc8129536d6fe26fdb6d6fb4b
