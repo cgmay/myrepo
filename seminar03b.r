@@ -152,6 +152,77 @@ str(oDat)
 
 ## Overplotting and plot matrix
 prDat <- read.table("GSE4051_data.tsv")
-=======
+str(prDat, max.level = 0)
 
->>>>>>> 0ac77580b0d31aafc8129536d6fe26fdb6d6fb4b
+prDes <- readRDS("GSE4051_design.rds")
+str(prDes)
+
+set.seed(2)
+(yo <- sample(1:ncol(prDat), size = 2))
+
+bDat <- data.frame(y = prDat[[yo[1]]], z = prDat[[yo[2]]])
+str(bDat)
+
+(p <- ggplot(bDat, aes(z, y)) +
+  geom_point())
+# make the dots more transparent for interpretability
+(p <- ggplot(bDat, aes(z, y)) +
+  geom_point(alpha = 0.1))
+
+# density plot
+(p <- ggplot(bDat, aes(z, y)) +
+  stat_density2d())
+
+# using colours
+(p <- ggplot(bDat, aes(z, y)) +
+  stat_density2d(geom = "tile", contour = F, aes(fill = ..density..))
++
+  scale_fill_gradient(low = "white", high = "blue"))
+
+## Hexbin stuff
+library(hexbin)
+(p <- ggplot(bDat, aes(z, y)) +
+  stat_binhex())
+
+## pairwise scatterplots
+set.seed(3)
+(yo <- sample(1:ncol(prDat), size = 4))
+pairDat <- subset(prDat, select = yo)
+str(pairDat)
+
+install.packages("GGally")
+library("GGally")
+(p <- ggpairs(pairDat))
+
+## A Heatmap
+library(RColorBrewer)
+
+# set seed so that we have exactly reproducable results
+set.seed(1)
+
+# choose 50 probes out of the 30k to work with
+yo <- sample(1:nrow(prDat), size = 50)
+hDat <- prDat[yo, ]
+colnames(hDat) <- with(prDes, paste(devStage, gType, sidChar, sep = "_"))
+
+#transform the data to tall format
+prDatTall <- data.frame(sample = rep(colnames(hDat), each = nrow(hDat)), 
+                        probe = rownames(hDat),
+                        expression = unlist(hDat))
+
+# creat a blue -> purple palette
+jBuPuFun <- colorRampPalette(brewer.pal(n = 9, "BuPu"))
+paletteSize <- 256
+jBuPuPalette <- jBuPuFun(paletteSize)
+
+# heatmap!
+ggplot(prDatTall, aes(probe, sample, fill = expression)) +
+  theme(axis.text.x = element_text(angle = 90, hjust = 1, vjust = 0.5)) +
+  geom_tile() +
+  scale_fill_gradient2(low = jBuPuPalette[1],
+                       mid = jBuPuPalette[paletteSize/2],
+                       high = jBuPuPalette[paletteSize],
+                       midpoint = (max(prDatTall$expression) +
+                                     min(prDatTall$expression)) / 2,
+                       name = "Expression")
+
