@@ -152,6 +152,7 @@ str(oDat)
 
 ## Overplotting and plot matrix
 prDat <- read.table("GSE4051_data.tsv")
+<<<<<<< HEAD
 str(prDat, max.level = 0)
 
 prDes <- readRDS("GSE4051_design.rds")
@@ -225,4 +226,6 @@ ggplot(prDatTall, aes(probe, sample, fill = expression)) +
                        midpoint = (max(prDatTall$expression) +
                                      min(prDatTall$expression)) / 2,
                        name = "Expression")
+=======
+>>>>>>> e7a15f318815d93e1e38bf169772207fef00f25d
 
