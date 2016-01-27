@@ -226,6 +226,5 @@ ggplot(prDatTall, aes(probe, sample, fill = expression)) +
                        midpoint = (max(prDatTall$expression) +
                                      min(prDatTall$expression)) / 2,
                        name = "Expression")
-=======
->>>>>>> e7a15f318815d93e1e38bf169772207fef00f25d
+
 
