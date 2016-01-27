@@ -152,7 +152,6 @@ str(oDat)
 
 ## Overplotting and plot matrix
 prDat <- read.table("GSE4051_data.tsv")
-<<<<<<< HEAD
 str(prDat, max.level = 0)
 
 prDes <- readRDS("GSE4051_design.rds")
@@ -204,7 +203,7 @@ set.seed(1)
 # choose 50 probes out of the 30k to work with
 yo <- sample(1:nrow(prDat), size = 50)
 hDat <- prDat[yo, ]
-colnames(hDat) <- with(prDes, paste(devStage, gType, sidChar, sep = "_"))
+colnames(hDat) <- with(prDes, paste(gType, devStage, sidChar, sep = "_"))
 
 #transform the data to tall format
 prDatTall <- data.frame(sample = rep(colnames(hDat), each = nrow(hDat)), 
@@ -225,6 +224,6 @@ ggplot(prDatTall, aes(probe, sample, fill = expression)) +
                        high = jBuPuPalette[paletteSize],
                        midpoint = (max(prDatTall$expression) +
                                      min(prDatTall$expression)) / 2,
-                       name = "Expression")
+                       name = "Expression") 
 
 
