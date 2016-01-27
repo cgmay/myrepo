@@ -116,6 +116,82 @@ bwplot(geneExp ~ devStage, oDat,
        panel = panel.violin)
 
 ## Heatmaps
+prDes <- readRDS("GSE4051_design.rds")
 prDat <- read.table("GSE4051_data.tsv")
 
 set.seed(1)
+(yo <-  sample(1:nrow(prDat), size = 50))
+hDat <- prDat[yo, ]
+
+hDat <- as.matrix(t(hDat))
+row.names(hDat) <- with(prDes,
+                       paste(devStage, gType, sidChar, sep="_"))
+
+heatmap(hDat, Rowv = NA, Colv = NA, 
+        scale = "none", 
+        margins = c(5, 8))
+
+heatmap(hDat, Rowv = NA, Colv = NA,
+        col = cm.colors(256), scale = "none",
+        margins = c(5, 8))
+
+library(RColorBrewer)
+display.brewer.all()
+
+jGreysFun <- colorRampPalette(brewer.pal(n = 9, "Greys"))
+jBuPuFun <- colorRampPalette(brewer.pal(n = 9, "BuPu"))
+
+heatmap(hDat, Rowv = NA, Colv = NA, scale = "none",
+        margins = c(5, 8), col = jGraysFun(256))
+
+heatmap(hDat, Rowv = NA, Colv = NA, scale = "none",
+        margins = c(5, 8), col = jBuPuFun(256))
+
+# allow dendrograms
+heatmap(hDat,
+        margins = c(5, 8), col = jBuPuFun(256))
+
+heatmap(hDat, margins = c(5, 8),
+        scale = c("column"), col = jBuPuFun(256))
+
+library(gplots)
+heatmap.2(hDat, col = jBuPuFun, trace = "none")
+
+set.seed(924)
+(yo <- sample(1:ncol(prDat), size = 2))
+y <- prDat[[yo[1]]]
+z <- prDat[[yo[2]]]
+str(y)
+str(z)
+
+xyplot(y ~ z, asp = 1)
+
+# find the points! various options
+smoothScatter(y ~ z, asp = 1) #using graphics
+xyplot(y ~ z, asp = 1, panel = 
+         panel.smoothScatter,
+       nbin = 150) #using lattice
+hexbinplot(y ~ z) #using hexbin
+
+
+# Plot matrix
+set.seed(3)
+(yo <- sample(1:ncol(prDat), size = 4))
+
+pairDat <- subset(prDat, select = yo)
+
+#plotting using base function
+pairs(pairDat)
+pairs(pairDat,
+      panel = function(...)
+      smoothScatter(..., add = TRUE))
+
+#using lattice
+splom(pairDat)
+splom(pairDat,
+      panel = panel.smoothScatter,
+      raster = TRUE)
+
+#using hexbin
+hexplom(pairDat)
+
