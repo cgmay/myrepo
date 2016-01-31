@@ -142,7 +142,7 @@ jGreysFun <- colorRampPalette(brewer.pal(n = 9, "Greys"))
 jBuPuFun <- colorRampPalette(brewer.pal(n = 9, "BuPu"))
 
 heatmap(hDat, Rowv = NA, Colv = NA, scale = "none",
-        margins = c(5, 8), col = jGraysFun(256))
+        margins = c(5, 8), col = jGreysFun(256))
 
 heatmap(hDat, Rowv = NA, Colv = NA, scale = "none",
         margins = c(5, 8), col = jBuPuFun(256))
@@ -157,6 +157,7 @@ heatmap(hDat, margins = c(5, 8),
 library(gplots)
 heatmap.2(hDat, col = jBuPuFun, trace = "none")
 
+library(hexbin)
 set.seed(924)
 (yo <- sample(1:ncol(prDat), size = 2))
 y <- prDat[[yo[1]]]
