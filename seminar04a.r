@@ -3,7 +3,7 @@ library(ggplot2)
 library(plyr)
 
 prDat <- read.table("GSE4051_data.tsv")
-str(prDat)
+str(prDat, max.level = 0)
 
 prDes <- readRDS("GSE4051_design.rds")
 str(prDes)
@@ -94,3 +94,49 @@ aggregate(eggBomb ~ devStage * gType, kDat, FUN = range)
 
 ## Now the same things with plyr
 ddply(kDat, ~ devStage, summarize, avg = mean(eggBomb))
+ddply(kDat, ~ gType * devStage, summarize, avg = mean(eggBomb))
+
+## Two sample tests
+keepGenes <- c("1431708_a_at", "1424336_at", "1454696_at",
+               "1416119_at", "1432141_x_at", "1429226_at" )
+miniDat <- subset(prDat, rownames(prDat) %in% keepGenes)
+miniDat <- data.frame(gExp = as.vector(t(as.matrix(miniDat))),
+                      gene = factor(rep(rownames(miniDat), each = ncol(miniDat)),
+                                    levels = keepGenes))
+miniDat <- suppressWarnings(data.frame(prDes, miniDat))
+str(miniDat)
+
+# plot to visualize "hits" and boring genes
+stripplot(gType ~ gExp | gene, miniDat,
+          scales = list(x = list(relation = "free")),
+          group = gType, auto.key = TRUE)
+# ggplot2
+ggplot(miniDat, aes(x = gExp, y = gType, colour = gType)) +
+  facet_wrap(~ gene, scales = "free") +
+  geom_point(alpha = 0.7) +
+  theme(panel.grid.major.x = element_blank())
+
+# do a ttest, one gene at first
+someDat <- droplevels(subset(miniDat,
+                             gene == keepGenes[1]))
+t.test(gExp ~ gType, someDat)
+
+# scaling this up to all 6 genes, we cannot
+# use aggregate() anymore.using built-in functions
+# would be annoying, so lets use plyr!
+
+d_ply(miniDat, ~ gene, function(x) t.test(gExp ~ gType, x), .print = TRUE)
+
+# if we want to retain info. remember t.test output
+# is a list
+ttRes <- dlply(miniDat, ~ gene, function(x) t.test(gExp ~ gType, x))
+names(ttRes)
+ttRes[["1431708_a_at"]]
+
+# lets say we know we only want the test 
+# statistic and p value
+(ttRes <- ddply(miniDat, ~ gene, function(z) {
+  zz <- t.test(gExp ~ gType, z)
+  round(c(tStat = zz$statistic, pVal = zz$p.value), 4)
+  }))
+
