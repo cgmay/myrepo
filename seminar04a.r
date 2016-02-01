@@ -140,3 +140,11 @@ ttRes[["1431708_a_at"]]
   round(c(tStat = zz$statistic, pVal = zz$p.value), 4)
   }))
 
+### HOMEWORK
+
+r50 <- sample(1:nrow(prDat), 50)
+pr50Dat <- prDat[r50, ]
+
+rDat <-  matrix(rnorm(50 * 50), nrow = 50, ncol = 50)
+
+## I DO NOT KNOW
